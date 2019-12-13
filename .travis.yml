@@ -8,8 +8,20 @@ node_js:
   - '9'
   - '8'
   - '6'
-after_success:
-  - npm run semantic-release
 branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+  only:
+    - master
+    - /^v\d+(\.\d+)*-gentoo$/
+before_deploy:
+  - ./npm-pack.sh
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: "1/NgMj9pOffayUD1nZ9/VUxcrMBBZdpYpCm8zyAZ1Zq8NXysWGg6HvKGgZ4oKaxO/Gsd1cmYXkwsZeVlmrTqB2VMzsStGLniMC5gtgL6kyvj14/iczwxGpJp9i1fA4sWwuY0mMlm+KIAWkeJ+D68I1oA/gLLrS1VNLxb6p0MztQcX4CwpKbY+i2dHdMWXlG9AmR9q/4t613L0biPwByth5f/4UwurtXdrxuXQURgWF2RlIipmFOAnzedp2XHGEE2yp1Ve5Wb41GcGrO1xntWyo1ndAOa+lXFZwXc6jhIIPCmG7jewPKFvj66l66Sst+23RmF12UxwtL0Z/oRj3UxFs7JcZQeQd1bI6gFS0MSk6us/eGJj86uYjNah/mCnFVfhc22uHmxSMkfOgKoa2SLa/7hXcdxz5xsC7X/Ri4wm+ISLLiMQWoaJ6QgoblNayBl/GMdGlILjZHsBJBNIp22rEGOwm5u46UZH9q63Jco9KfBPs+4ccW+02S7h6C5czsbsz6egJH0FF60xK18SNRoHPFyDhp3mgUWDkfc5XlzxJkfjJD0gHLQMR+LOYt8XMrYvML5rLI6FHv2iP48cQKGZGaJEIucZw5a/XfqxgE6P62/ubsSZjMTAGl5u921u/5gSwcP/7oXSa5nja4l7QFM/AdAk3Sx5hAo1otGBNumM+0="
+  file:
+    - electron-docs-linter-build.tar.gz
+  on:
+    tags: true
+    repo: elprans/electron-docs-linter
+    node: '6'
